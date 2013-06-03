@@ -34,12 +34,14 @@
         this.each(function() {
             var $ele = $(this), str = $ele.text(), progress = 0, replace = /[^\s]/g,
                 random = randomAlphaNum, inc = 3;
+            clearInterval($ele.data("__text_effect_interval__"));
             $ele.text('');
             var timer = setInterval(function() {
                 $ele.text(str.substring(0, progress) + str.substring(progress, str.length).replace(replace, random));
                 progress += inc
                 if (progress >= str.length + inc) clearInterval(timer);
             }, 100);
+            $ele.data("__text_effect_interval__", timer);            
         });
         return this;
     };
@@ -47,11 +49,13 @@
     $.fn.typewriter = function(callback) {
         this.each(function() {
             var $ele = $(this), str = $ele.text(), progress = 0;
+            clearInterval($ele.data("__text_effect_interval__"));
             $ele.text('');
             var timer = setInterval(function() {
                 $ele.text(str.substring(0, progress++) + (progress & 1 ? '_' : ''));
                 if (progress >= str.length) { clearInterval(timer); callback($ele); }
             }, 100);
+            $ele.data("__text_effect_interval__", timer);            
         });
         return this;
     };
@@ -59,10 +63,12 @@
     $.fn.typewriter_delete = function(callback) {
         this.each(function() {
             var $ele = $(this), str = $ele.text(), progress = $ele.text().length;
+            clearInterval($ele.data("__text_effect_interval__"));
             var timer = setInterval(function() {
                 $ele.text(str.substring(0, progress--) + (progress & 1 && progress >= 0 ? '_' : ''));
                 if (progress < 0) { clearInterval(timer); callback($ele); }
             }, 100);
+            $ele.data("__text_effect_interval__", timer);            
         });
         return this;
     };
@@ -71,6 +77,7 @@
         this.each(function() {
             var $ele = $(this), str = $ele.text(), replace = /[^\s]/,
                 state = [], choose = [], reveal = 25, random = randomAlphaNum;
+            clearInterval($ele.data("__text_effect_interval__"));
             
             for (var i = 0; i < str.length; i++) {
                 if (str[i].match(replace)) {
@@ -94,6 +101,7 @@
                 $ele.text(state.join(''));
                 if (choose.length == 0) clearInterval(timer);
             }, 100);
+            $ele.data("__text_effect_interval__", timer);            
         });
         return this;
     };
